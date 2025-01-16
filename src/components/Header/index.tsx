@@ -10,7 +10,6 @@ type HeaderProps = {
 }
 
 const Header = ({toBusinessHomePage, isHomePage}: HeaderProps) => {
-
     const navigate = useNavigate();
     const {id, type, businessId} = useParams();
     const { logOut } = useAuth()    

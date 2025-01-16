@@ -17,7 +17,6 @@ type ItemsProps = {
 const Sidebar = ({
   defaultOpen
 }:SidebarProps) => {
-
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const {id, type} = useParams();
   const navigate = useNavigate();
@@ -51,7 +50,8 @@ const Sidebar = ({
   return (
     <S.SidebarWrapper isOpen={isOpen}>
       <S.ToggleButton onClick={toggleSidebar} isOpen={isOpen}>
-        Mais {isOpen? '':<SidebarArrowRight/>}
+        Mais
+        {isOpen? '':<SidebarArrowRight/>}
       </S.ToggleButton>
       <S.SidebarMenu>
           <S.SidebarCloseMenu onClick={toggleSidebar}>
