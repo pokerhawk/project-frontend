@@ -17,7 +17,7 @@ export const PageWrapper = styled.div `
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 40px;
+    gap: 3vh;
     width: 100%;
     height: 100%;
     background-color: ${theme.color.white};
@@ -65,7 +65,6 @@ export const CardWrapper = styled.div `
     justify-content: space-between;
     align-items: center;
     gap: 5vw;
-    padding-bottom: 2%;
     background: #FBFBFF;
 `;
 

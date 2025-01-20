@@ -18,7 +18,7 @@ export const inputWrapperModifiers = {
 
         &>input {
             width: 80%;
-            height: 20px;
+            height: 1.5vh;
         }
         
         svg {
@@ -31,6 +31,16 @@ export const inputWrapperModifiers = {
 type InputProps = 'inputError' | 'inputSearch';
 
 export type InputWrapperProps = {} & Pick<TInputProperties, InputProps>;
+
+export const Wrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+`;
 
 export const InputWrapper = styled.div<InputWrapperProps>`
     ${({ theme, inputError, inputSearch }) => css`
@@ -74,17 +84,6 @@ export const Icon = styled.i`
     margin: 3px;
     width: 16px;
     height: 16px;
-`;
-
-export const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-
-    gap: 6px;
-    width: 100%;
-    height: 100%;
 `;
 
 export const Error = styled.p`

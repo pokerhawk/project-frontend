@@ -1,5 +1,6 @@
 const theme = {
     color: {
+        default: '#33B864',
         gray: '#8F8F8F',
         informationalGray: '#222222',
         darkGray: '#141414',

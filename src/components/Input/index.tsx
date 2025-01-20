@@ -19,17 +19,17 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = ({
 }, ref) => {
     return (
         <S.Wrapper>
-            {error ? <S.Error>{label}</S.Error> : (label ? <label>{label}</ label> : '')}
+            {error ? <S.Error>{label}</S.Error> : (label ?? <label>{label}</ label>)}
             <S.InputWrapper
                 inputError={inputError}
                 inputSearch={inputSearch}
             >
-                {iconLeft ? <S.Icon>{iconLeft}</S.Icon> : ''}
+                {iconLeft ?? <S.Icon>{iconLeft}</S.Icon>}
                 {<S.Input
                     ref={ref}
                     {...props}
                 />}
-                {iconRight ? <S.Icon>{iconRight}</S.Icon> : ''}
+                {iconRight ?? <S.Icon>{iconRight}</S.Icon>}
             </S.InputWrapper>
             {error && <S.Error>{error}</S.Error>}
         </S.Wrapper>

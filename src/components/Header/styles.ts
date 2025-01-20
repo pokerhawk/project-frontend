@@ -3,25 +3,20 @@ import theme from "../../styles/styled-theme";
 
 export const HeaderWrapper = styled.header `
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
-    padding: 20px 5px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    background: ${theme.color.white};
-    z-index: 1000;
+    padding: 1.5vh 1vw;
+    border-radius: 0px 0px 25px 25px;
+    box-shadow: 0 1vh 0.5vh rgba(0, 0, 0, 0.5);
+    background: ${theme.color.default};
 `;
 
-export const BackButtonWrapper = styled.div `
+export const NavBar = styled.nav `
     display: flex;
-    margin-right: auto;
+    gap: 1vw;
 `;
 
-export const TitleWrapper = styled.div `
+export const A = styled.a `
     display: flex;
-    position: absolute;
-`;
-
-export const LogOutWrapper = styled.div `
-    display: flex;
-    margin-left: auto;
 `;

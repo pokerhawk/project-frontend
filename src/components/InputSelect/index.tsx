@@ -1,36 +1,30 @@
 import { ForwardRefRenderFunction, SelectHTMLAttributes, forwardRef } from 'react';
 import * as S from './styles';
 
-type TOption = {
-    name: string
-    value: string | number
-}
-
 type TInputSelect = {
-    optionsList: TOption[]
+    name: string;
+    defaultValue: string|number;
+    optionsList: Array<string|number>;
 }
 
 type TSelectProps = TInputSelect & SelectHTMLAttributes<HTMLSelectElement>;
 
-const InputSelect: ForwardRefRenderFunction<HTMLSelectElement, TSelectProps> = ({ optionsList, ...props }: TSelectProps, ref) => {
+const InputSelect: ForwardRefRenderFunction<HTMLSelectElement, TSelectProps> = ({ name, defaultValue, optionsList, ...props }: TSelectProps, ref) => {
     return (
         <S.Wrapper>
             <S.Select
-                name=''
+                name={name}
+                defaultValue={defaultValue}
                 ref={ref}
                 {...props}
             >
-                {
-                    optionsList.map(optionInList => {
-                        return (
-                            <option
-                                value={optionInList.value}
-                            >
-                                {optionInList.name}
-                            </option>
-                        );
-                    })
-                }
+                {optionsList.map(option => {
+                    return (
+                        <option value={option}>
+                            {option}
+                        </option>
+                    );
+                })}
             </S.Select>
         </S.Wrapper>
     );

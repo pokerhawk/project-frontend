@@ -7,6 +7,7 @@ import Sidebar from '../../components/SideBar';
 import Chart from '../../components/Chart';
 import { useEffect, useState } from 'react';
 import Cards from '../../components/Cards';
+import Input from '../../components/Input';
 
 const HomePage = () => {
     const {id, type} = useParams();
@@ -35,7 +36,7 @@ const HomePage = () => {
 
     return (
         <PageWrapper>
-            <Header isHomePage/>
+            <Header/>
             <CardWrapper>
                 <Cards data={cardsData} />
             </CardWrapper>
@@ -43,6 +44,7 @@ const HomePage = () => {
                 <h1>Suas Vendas</h1>
                 <UsersTable title='Vendas' />
             </S.Wrapper>
+            <Input inputSearch/>
             <SimpleWrapper>
                 <Sidebar defaultOpen={false}/>
                 <h1>Over View Mensal</h1>
