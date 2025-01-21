@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import theme from "../../styles/styled-theme";
 
+interface AProps {
+    isCurrentPage: boolean;
+}
+
 export const HeaderWrapper = styled.header `
     display: flex;
     justify-content: space-between;
@@ -9,7 +13,7 @@ export const HeaderWrapper = styled.header `
     padding: 1.5vh 1vw;
     border-radius: 0px 0px 25px 25px;
     box-shadow: 0 1vh 0.5vh rgba(0, 0, 0, 0.5);
-    background: ${theme.color.default};
+    background: ${theme.color.foreground};
 `;
 
 export const NavBar = styled.nav `
@@ -17,6 +21,15 @@ export const NavBar = styled.nav `
     gap: 1vw;
 `;
 
-export const A = styled.a `
+export const A = styled.a<AProps> `
     display: flex;
+    padding: 10px 15px 10px 15px;
+    border-radius: 10px;
+    color: ${theme.color.white};
+    border: 1px solid ${theme.color.gray};
+    background: ${(prop)=>(prop.isCurrentPage ? theme.color.gray: '')};
+    text-decoration: none;
+    &:hover {
+        background: ${theme.color.blue};
+    }
 `;

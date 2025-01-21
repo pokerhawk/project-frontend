@@ -4,7 +4,6 @@ import media from 'styled-media-query';
 import theme from '../../styles/styled-theme';
 
 export const buttonModifiers = {
-    
     socialButton: (theme: DefaultTheme) => css`
         padding: 5px 5px;
         background-color: ${theme.color.blue};
@@ -54,15 +53,30 @@ export const buttonModifiers = {
         font-size: 15px;
     `,
 
-    returnButton: () => css`
-        padding: 6px;
-        border: 1px solid ${theme.color.darkGray};
-        height: 34px;
-        width: 82px;
+    logoutButton: () => css`
+        height: 35px;
+        width: 100px;
         gap: 5px;
-        background: ${theme.color.white};
-        color: ${theme.color.darkGray};
+        color: ${theme.color.white};
         font-size: 16px;
+        background-color: ${theme.color.logoutRed};
+        border : 1px solid ${theme.color.gray};
+        &:hover {
+            border: 1px solid ${theme.color.lossRed};
+        }
+    `,
+
+    returnButton: () => css`
+        height: 34px;
+        width: 100px;
+        gap: 5px;
+        color: ${theme.color.white};
+        font-size: 16px;
+        background-color: ${theme.color.gray};
+        border : 1px solid ${theme.color.gray};
+        &:hover {
+            border: 1px solid ${theme.color.blue};
+        }
     `,
 
     commomButton: (theme: DefaultTheme) => css`
@@ -97,12 +111,12 @@ export const buttonModifiers = {
     `
 }
 
-type ButtonTypesProps = 'socialButton' | 'textButton' | 'titleButton' | 'reportButton' | 'returnButton' | 'commomButton' | 'exportExcelButton';
+type ButtonTypesProps = 'socialButton' | 'textButton' | 'titleButton' | 'reportButton' | 'returnButton' | 'commomButton' | 'logoutButton' | 'exportExcelButton';
 
 export type StyledButtonProps = {} & Pick<ButtonProps, ButtonTypesProps>
 
 export const Button = styled.button<StyledButtonProps>`
-    ${({ theme, socialButton, titleButton, textButton, reportButton, returnButton, commomButton, exportExcelButton }) => css`
+    ${({ theme, socialButton, titleButton, textButton, reportButton, returnButton, logoutButton, commomButton, exportExcelButton }) => css`
         display: flex;
         border-radius: 8px;
         width: 100%;   
@@ -111,16 +125,18 @@ export const Button = styled.button<StyledButtonProps>`
         gap: 12px;
         align-items: center;
         justify-content: center;
-        font-size: ${theme.font.sizes.xsmall};
+        font-size: ${theme.font.sizes.large};
         font-style: normal;
         font-weight: ${theme.font.bold};
         line-height: 24px;
         cursor: pointer;
+        background: ${theme.color.foreground}
         ${!!textButton && buttonModifiers.textButton(theme)}
         ${!!socialButton && buttonModifiers.socialButton(theme)}
         ${!!titleButton && buttonModifiers.titleButton(theme)}
         ${!!reportButton && buttonModifiers.reportButton()}
         ${!!returnButton && buttonModifiers.returnButton()}
+        ${!!logoutButton && buttonModifiers.logoutButton()}
         ${!!commomButton && buttonModifiers.commomButton(theme)}
         ${!!exportExcelButton && buttonModifiers.exportExcelButton()}
 

@@ -5,7 +5,9 @@ import theme from "./styled-theme";
 export const GlobalStyles = createGlobalStyle`
     ${({ theme }) => css`
         * {
-            font-family: ${theme.font.family};
+            font-family: ${theme.font.family.JosefinSans};
+            font-size: ${theme.font.sizes};
+            /* background-color: ${theme.color.background}; */
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -20,16 +22,6 @@ export const PageWrapper = styled.div `
     gap: 3vh;
     width: 100%;
     height: 100%;
-    background-color: ${theme.color.white};
-`;
-
-export const SimpleWrapper = styled.div `
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 25px;
-    padding-bottom: 20px;
 `;
 
 export const SignPageWrapper = styled.div`

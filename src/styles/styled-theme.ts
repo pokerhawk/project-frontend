@@ -1,17 +1,19 @@
 const theme = {
     color: {
-        default: '#33B864',
-        gray: '#8F8F8F',
+        foreground: '#282828',
+        background: '#3c3c3c',
+        gray: '#878787',
+        lightGray: '#E6E6E6',
         informationalGray: '#222222',
         darkGray: '#141414',
         matteGray: '#344054',
         xgray: '#475467',
         blueGray: '#344054',
-        lightGray: '#D3D3D3',
-        bluishGray: '#557BA5',
+        bluishGray: '#6E78A0',
         red: '#ff0500',
         washedRed: '#FF6347',
         lossRed: '#FF1D18',
+        logoutRed: '#B23B3B',
         navyBlue: '#2E6CB2',
         aquaBlue: '#61ABD8',
         blue: '#1570EF',
@@ -30,21 +32,31 @@ const theme = {
         purple: '#6927DA'
     },
     font: {
-        family:
-            "Inter, Montserrat, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
+        family: {
+            JosefinSans: "Josefin Sans",
+            Inter: "Inter",
+            Montserrat: "Montserrat",
+            BlinkMacSystemFont: "BlinkMacSystemFont",
+            Roboto: "Roboto",
+            Oxygen: "Oxygen",
+            Cantarell: "Cantarell",
+            OpenSans: "Open Sans",
+            SansSerif: "sans-serif",
+            HelveticaNeue: "Helvetica Neue"
+        },
         light: 300,
         normal: 400,
         bold: 600,
         xbold: 700,
         xxbold: 800,
         sizes: {
-            xsmall: '1.2rem',
-            small: '1.4rem',
-            medium: '1.6rem',
-            large: '1.8rem',
-            xlarge: '2.0rem',
-            xxlarge: '2.8rem',
-            huge: '5.2rem'
+            smaller: '0.5rem',
+            small: '0.8rem',
+            medium: '1rem',
+            large: '1.3rem',
+            larger: '1.5rem',
+            extraLarge: '2rem',
+            huge: '3rem'
         }
     },
 }

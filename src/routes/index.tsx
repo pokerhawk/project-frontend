@@ -4,6 +4,7 @@ import NewSalePage from "../pages/NewSalePage";
 import HomePage from "../pages/HomePage";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import AboutPage from "../pages/About";
 
 const AllRoutes = () => {
     return (
@@ -15,6 +16,21 @@ const AllRoutes = () => {
                 </ProtectedRoute>
             } />
             <Route path='/newsale' element={
+                <ProtectedRoute>
+                    <NewSalePage />
+                </ProtectedRoute>
+            } />
+            <Route path='/about' element={
+                <ProtectedRoute>
+                    <AboutPage />
+                </ProtectedRoute>
+            } />
+            <Route path='/help' element={
+                <ProtectedRoute>
+                    <NewSalePage />
+                </ProtectedRoute>
+            } />
+            <Route path='/settings' element={
                 <ProtectedRoute>
                     <NewSalePage />
                 </ProtectedRoute>

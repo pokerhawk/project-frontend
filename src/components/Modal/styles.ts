@@ -24,7 +24,8 @@ export const Modal = styled.div`
     top: 50%;
     left: 50%;
     border-radius: 10px;
-    width: 30%;
+    min-width: 40%;
+    max-width: 80%;
     height: auto;
     transform: translate(-50%, -50%);
     background-color: ${theme.color.white};
@@ -32,8 +33,8 @@ export const Modal = styled.div`
 
 export const ModalHeader = styled.header`
     display: flex;
+    align-items: center;
     flex-direction: row;
-    justify-self: start;
     justify-content: space-between;
     padding: 10px 10px
 `
@@ -44,8 +45,4 @@ export const ModalContent = styled.div`
     justify-content: center;
     align-items: center;
     padding: 5% 0 5% 0;
-`
-
-export const H1 = styled.h1`
-    border-bottom: 2px solid black;
 `

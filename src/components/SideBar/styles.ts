@@ -31,6 +31,7 @@ export const ToggleButton = styled.button<SidebarWrapperProps>`
   width: 4%;
   left: ${(prop)=>(prop.isOpen ? '-4%': '0')};
   border: 0;
+  font-size: ${theme.font.sizes.medium};
   color: ${theme.color.white};
   background: ${theme.color.navyBlue};
   border: 1px solid #000;

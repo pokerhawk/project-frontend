@@ -13,11 +13,12 @@ export type ButtonProps = {
     commomButton?: boolean;
     reportButton?: boolean;
     returnButton?: boolean;
+    logoutButton?: boolean;
     exportExcelButton?: boolean;
 } & ButtonTypes;
 
 const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = ({
-    children, leftIcon, rightIcon, socialButton, textButton, titleButton, reportButton, returnButton, commomButton, exportExcelButton, ...props
+    children, leftIcon, rightIcon, socialButton, textButton, titleButton, reportButton, returnButton, logoutButton, commomButton, exportExcelButton, ...props
 }, ref) => {
     return (
         <S.Button
@@ -26,6 +27,7 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = ({
             titleButton={titleButton}
             reportButton={reportButton}
             returnButton={returnButton}
+            logoutButton={logoutButton}
             commomButton={commomButton}
             exportExcelButton={exportExcelButton}
             ref={ref}
