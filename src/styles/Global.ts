@@ -12,6 +12,14 @@ export const GlobalStyles = createGlobalStyle`
             padding: 0;
             box-sizing: border-box;
         }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
     `}
 `;
 
@@ -69,17 +77,17 @@ export const Aside = styled.aside`
     padding-top: 100px;
 `
 
-export const ColumnWrapper = styled.div`
+export const SimpleColumnWrapper = styled.div`
     display: flex;
     flex-direction: column;
 
 `
 
-export const RowWrapper = styled.div`
+export const SimpleRowWrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     padding: 2px;
-    gap: 15px;
+    gap: 10px;
 `

@@ -13,14 +13,6 @@ export const ModalWrapper = styled.div `
     display: flex;
 `;
 
-export const SimpleRowWrapper = styled.div `
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
-`;
-
 export const Wrapper = styled.div `
     display: flex;
     position: absolute;

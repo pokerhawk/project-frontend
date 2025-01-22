@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import * as S from './styles';
+import * as G from '../../styles/Global';
 import UsersTable from '../../components/UsersTable';
 import { CardWrapper, PageWrapper } from '../../styles/Global';
 import Header from '../../components/Header';
@@ -83,10 +84,10 @@ const HomePage = () => {
                     children={
                         <S.TemperatureModalWrapper>
                             <h1>{weather.data?.city} - {weather.data?.region} - {weather.data?.country}</h1>
-                            <S.SimpleRowWrapper>
+                            <G.SimpleRowWrapper>
                                 <h2>{weather.data?.title}</h2>
                                 <S.Img src={weather.data?.icon} alt={`Temperature icon`} />
-                            </S.SimpleRowWrapper>
+                            </G.SimpleRowWrapper>
                             <p><strong>Temperatura:</strong> {weather.data?.temperature}</p>
                             <p><strong>Sensação Termica:</strong> {weather.data?.feelsLikeTemp}</p>
                             <p><strong>Temperatura Mín:</strong> {weather.data?.lowTemperature}</p>

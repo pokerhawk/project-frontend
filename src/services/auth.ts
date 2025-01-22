@@ -27,9 +27,9 @@ export const loginRequest = async ({ email, password, code }: LoginRequestProps)
     }
 }
 
-export const isMfaEnabledRequest = async (email:string) => {
+export const isMfaEnabledRequest = async ({ email, password }:Partial<LoginRequestProps>) => {
     try {
-        const { data } = await api.get(`/auth/isAuthenticated?email=${email}`);
+        const { data } = await api.post(`/auth/isAuthenticated`, { email, password });
         return data;
     } catch(err){
         throw err;

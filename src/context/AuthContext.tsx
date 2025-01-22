@@ -16,16 +16,11 @@ type UserProps = {
     email: string;
 }
 
-type CheckMfaCodeResponseProps = {
-    mfaEnabled: boolean;
-    qrcode: string;
-}
-
 type AuthContextProps = {
     isAuthenticated: boolean;
     loading: boolean;
     login: (data: LoginProps) => Promise<void>;
-    checkMfaCode: (email:string) => Promise<CheckMfaCodeResponseProps>;
+    checkMfaCode: (data: Partial<LoginProps>) => Promise<any>;
     logOut: () => void;
     user: UserProps
 }
@@ -75,13 +70,9 @@ function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-    const checkMfaCode = async (email: string) =>{
+    const checkMfaCode = async ({ email, password }: Partial<LoginProps>) =>{
         try {
-            const { mfaEnabled, qrcode } = await isMfaEnabledRequest(email)
-            return {
-                mfaEnabled,
-                qrcode: qrcode?qrcode:''
-            }
+            return await isMfaEnabledRequest({ email, password })
         } catch (err){
             throw err
         }

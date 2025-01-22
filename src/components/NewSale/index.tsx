@@ -9,7 +9,7 @@ import { createSale } from "../../services/sales";
 import Select from "../Select";
 import { useState } from "react";
 import SwitchOption from "../SwitchOption";
-import { RowWrapper } from "../../styles/Global";
+import { SimpleRowWrapper } from "../../styles/Global";
 import Modal from "../Modal";
 import { maskPhone, unmaskPhone } from "../../utils/format/phone";
 import Toastify from "../Toastify/Toastify";
@@ -34,7 +34,6 @@ const NewSaleScheme = yup.object({
 const NewSale = ({
     userId
 }:NewSaleProp) => {
-
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [paymentMethod, setPaymentMethod] = useState('');
     const [commissionOption, setCommissionOption] = useState(false);
@@ -167,7 +166,7 @@ const NewSale = ({
                                             }))
                                         }}
                                     />
-                                    <RowWrapper>
+                                    <SimpleRowWrapper>
                                         <InputStringField
                                             label="WhatsApp"
                                             type="text"
@@ -192,9 +191,9 @@ const NewSale = ({
                                                 }))
                                             }}
                                         />
-                                    </RowWrapper>
+                                    </SimpleRowWrapper>
                                     <hr/>
-                                    <RowWrapper>
+                                    <SimpleRowWrapper>
                                         <InputStringField
                                             label="Endereço"
                                             type="text"
@@ -218,8 +217,8 @@ const NewSale = ({
                                                 }))
                                             }}
                                         />
-                                    </RowWrapper>
-                                    <RowWrapper>
+                                    </SimpleRowWrapper>
+                                    <SimpleRowWrapper>
                                         <InputStringField
                                             label="Bairro"
                                             type="text"
@@ -253,7 +252,7 @@ const NewSale = ({
                                                 }))
                                             }}
                                         />
-                                    </RowWrapper>
+                                    </SimpleRowWrapper>
                                     <InputStringField
                                         label="Complemento"
                                         type="text"
