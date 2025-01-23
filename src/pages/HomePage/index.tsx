@@ -1,17 +1,14 @@
 import { useParams } from 'react-router-dom';
 import * as S from './styles';
 import * as G from '../../styles/Global';
-import UsersTable from '../../components/UsersTable';
-import { CardWrapper, PageWrapper } from '../../styles/Global';
+import { PageWrapper } from '../../styles/Global';
 import Header from '../../components/Header';
 import Sidebar from '../../components/SideBar';
-import Chart from '../../components/Chart';
 import { useEffect, useState } from 'react';
-import Cards from '../../components/Cards';
 import Input from '../../components/Input';
-import SearchIcon from '../../assets/images/icons/SearchIcon';
 import { weatherByCity, weatherResponseProps } from '../../services/weather';
 import Modal from '../../components/Modal';
+import { numberToRoman } from '../../services/math';
 
 type weatherProps = {
     bool: boolean;
@@ -20,33 +17,16 @@ type weatherProps = {
 
 const HomePage = () => {
     const {id, type} = useParams();
-    const [loadingChart, setLoadingChart] = useState(true);
-    const [chartData, setChartData] = useState<any>([]);
-    const [cardsData, setCardsData] = useState([
-        {
-            cardTitle: 'Saldo Empresarial',
-            value: 0,
-            isMonetaryValue: true
-        },
-        {
-            cardTitle: 'ROI',
-            value: 0,
-            isMonetaryValue: true
-        },
-        {
-            cardTitle: 'ROI %',
-            value: 0
-        }
-    ])
     const [weather, setWeather] = useState<weatherProps>({bool: false, data: undefined})
+    const [romanNumber, setRomanNumber] = useState<string|undefined>(undefined);
 
     const closeModal = () =>{
         setWeather({bool:false, data: undefined})
     }
     
     useEffect(()=>{
-        //console.log("ya")
-    }, [loadingChart === true])
+        //everytime weather.bool is true do something
+    }, [weather.bool === true])
 
     return (
         <PageWrapper>
@@ -76,6 +56,26 @@ const HomePage = () => {
                     />
                 </S.SearchWrapper>
             </S.Wrapper>
+            <S.Wrapper>
+                <h1>Número para Romanos</h1>
+                <S.SearchWrapper>
+                    <p>Número:</p>
+                    <Input 
+                        inputSearch
+                        type={"number"}
+                        onKeyDown={async(e:any)=>{
+                            if(e.key === 'Enter'){
+                                setRomanNumber(undefined)
+                                const res = await numberToRoman(e.target.value)
+                                setRomanNumber(res)
+                            }
+                        }}
+                    />
+                </S.SearchWrapper>
+                {(romanNumber) &&(
+                    <p>Resposta: {romanNumber}</p>
+                )}
+            </S.Wrapper>
             {weather.bool && (
                 <Modal
                     title={"Clima"}
@@ -100,24 +100,6 @@ const HomePage = () => {
                     }
                 />
             )}
-            {/* <CardWrapper> */}
-            {/*     <Cards data={cardsData} /> */}
-            {/* </CardWrapper> */}
-            {/* <S.Wrapper> */}
-            {/*     <h1>Suas Vendas</h1> */}
-            {/*     <UsersTable title='Vendas' /> */}
-            {/* </S.Wrapper> */}
-            {/* <S.SimpleWrapper> */}
-            {/*     <h1>Over View Mensal</h1> */}
-            {/*     <S.Wrapper> */}
-            {/*         <Chart */}
-            {/*             title='Project-Frontend' */}
-            {/*             type='pie' */}
-            {/*             labels={['Receita', 'Despesa', 'Saldo']} */}
-            {/*             series={chartData} */}
-            {/*         /> */}
-            {/*     </S.Wrapper> */}
-            {/* </S.SimpleWrapper> */}
         </PageWrapper>
     );
 }

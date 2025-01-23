@@ -15,11 +15,7 @@ export const ModalWrapper = styled.div `
 
 export const Wrapper = styled.div `
     display: flex;
-    position: absolute;
     flex-direction: column;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 30vw;
     gap: 1vh;
     margin: 20px auto;

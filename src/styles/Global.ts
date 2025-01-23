@@ -91,3 +91,20 @@ export const SimpleRowWrapper = styled.div`
     padding: 2px;
     gap: 10px;
 `
+
+export const CenteredWrapper = styled.div `
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30vw;
+    gap: 1vh;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #e6e6e6;
+    background-color: ${theme.color.lightGray};
+    border-radius: 10px;
+    box-shadow: 1vh 1vh 0.5vh rgba(0, 0, 0, 0.5);
+`
