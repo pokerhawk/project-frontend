@@ -1,56 +1,44 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import * as S from './styles'
 import SidebarArrowLeft from '../../assets/images/icons/SidebarArrowLeft';
 import SidebarArrowRight from '../../assets/images/icons/SidebarArrowRight';
-import { useNavigate, useParams } from 'react-router-dom';
+import theme from '../../styles/styled-theme';
+// import { useNavigate, useParams } from 'react-router-dom';
 
 type SidebarProps = {
-  // items: Array<ItemsProps>
+  sidebarItems: Array<ItemsProps>
   defaultOpen:boolean
 }
 
 type ItemsProps = {
   itemName: string;
-  itemRef: string;
+  itemRef: any;
 }
 
 const Sidebar = ({
-  defaultOpen
+  defaultOpen, sidebarItems
 }:SidebarProps) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const {id, type} = useParams();
-  const navigate = useNavigate();
+  // const {id, type} = useParams();
+  // const navigate = useNavigate();
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  const sidebarItems = [
-    {
-      itemName: 'Vendas à confirmar',
-      itemRef: 'vendas/pendentes'
-    },
-    {
-      itemName: 'Vendedores e Comissões',
-      itemRef: 'comissao'
-    },
-    {
-      itemName: "Transações",
-      itemRef: "transacao"
-    },
-    {
-      itemName: "Nova Transação",
-      itemRef: "transacao/criar"
-    },
-    {
-      itemName: "Adicionar Mais",
-      itemRef: ""
-    },
-  ]
+  const scrollToSection = (ref:any) => {
+    ref.current.scrollIntoView({ behavior: "smooth" });
+    ref.current.style.backgroundColor = theme.color.lightBlue;
+    setTimeout(() => {
+      if (ref.current) {
+        ref.current.style.backgroundColor = 'transparent';
+      }
+    }, 750);
+  };
   
   return (
     <S.SidebarWrapper isOpen={isOpen}>
       <S.ToggleButton onClick={toggleSidebar} isOpen={isOpen}>
-        Mais
+        Expandir
         {isOpen? '':<SidebarArrowRight/>}
       </S.ToggleButton>
       <S.SidebarMenu>
@@ -58,7 +46,8 @@ const Sidebar = ({
             <SidebarArrowLeft color='#ffffff'/>
           </S.SidebarCloseMenu>
           {sidebarItems.map((prop:ItemsProps)=>{
-              return(<S.SidebarMenuItem onClick={()=>{navigate(`/${type}/${id}/${prop.itemRef}`)}}>
+              // return(<S.SidebarMenuItem onClick={()=>{navigate(`/${type}/${id}/${prop.itemRef}`)}}>
+              return(<S.SidebarMenuItem onClick={()=>{scrollToSection(prop.itemRef)}}>
                   {prop.itemName}
               </S.SidebarMenuItem>)
           })}

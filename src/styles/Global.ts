@@ -2,6 +2,11 @@ import styled, { createGlobalStyle, css } from "styled-components";
 import media from "styled-media-query";
 import theme from "./styled-theme";
 
+type PageWrapperProps = {
+    smallGap?: boolean;
+    bigGap?: boolean;
+}
+
 export const GlobalStyles = createGlobalStyle`
     ${({ theme }) => css`
         * {
@@ -23,11 +28,11 @@ export const GlobalStyles = createGlobalStyle`
     `}
 `;
 
-export const PageWrapper = styled.div `
+export const PageWrapper = styled.div<PageWrapperProps> `
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3vh;
+    gap: ${(prop)=>(prop.smallGap?'1vh':prop.bigGap?'5vh':'3vh')};
     width: 100%;
     height: 100%;
 `;

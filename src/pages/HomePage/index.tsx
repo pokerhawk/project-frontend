@@ -3,12 +3,11 @@ import * as S from './styles';
 import * as G from '../../styles/Global';
 import { PageWrapper } from '../../styles/Global';
 import Header from '../../components/Header';
-import Sidebar from '../../components/SideBar';
 import { useEffect, useState } from 'react';
 import Input from '../../components/Input';
 import { weatherByCity, weatherResponseProps } from '../../services/weather';
 import Modal from '../../components/Modal';
-import { numberToRoman } from '../../services/math';
+import { numberToRoman, romanToNumber } from '../../services/math';
 
 type weatherProps = {
     bool: boolean;
@@ -19,6 +18,7 @@ const HomePage = () => {
     const {id, type} = useParams();
     const [weather, setWeather] = useState<weatherProps>({bool: false, data: undefined})
     const [romanNumber, setRomanNumber] = useState<string|undefined>(undefined);
+    const [numberRoman, setNumberRoman] = useState<number|undefined>(undefined);
 
     const closeModal = () =>{
         setWeather({bool:false, data: undefined})
@@ -29,9 +29,8 @@ const HomePage = () => {
     }, [weather.bool === true])
 
     return (
-        <PageWrapper>
+        <PageWrapper bigGap>
             <Header/>
-            <Sidebar defaultOpen={false}/>
             <S.Wrapper>
                 <h1>Clima atual</h1>
                 <S.SearchWrapper>
@@ -74,6 +73,25 @@ const HomePage = () => {
                 </S.SearchWrapper>
                 {(romanNumber) &&(
                     <p>Resposta: {romanNumber}</p>
+                )}
+            </S.Wrapper>
+            <S.Wrapper>
+                <h1>Romanos para Número</h1>
+                <S.SearchWrapper>
+                    <p>Número:</p>
+                    <Input 
+                        inputSearch
+                        onKeyDown={async(e:any)=>{
+                            if(e.key === 'Enter'){
+                                setRomanNumber(undefined)
+                                const res = await romanToNumber(e.target.value)
+                                setNumberRoman(res)
+                            }
+                        }}
+                    />
+                </S.SearchWrapper>
+                {(numberRoman) &&(
+                    <p>Resposta: {numberRoman}</p>
                 )}
             </S.Wrapper>
             {weather.bool && (

@@ -19,7 +19,6 @@ export const romanToNumber = async (numeral:string):Promise<number> => {
         });
         return response.data;
     } catch (error) {
-        console.log(error)
         throw error;
     }
 }

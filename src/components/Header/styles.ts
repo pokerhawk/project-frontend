@@ -13,7 +13,7 @@ export const HeaderWrapper = styled.header `
     padding: 1.5vh 1vw;
     border-radius: 0px 0px 25px 25px;
     box-shadow: 0 1vh 0.5vh rgba(0, 0, 0, 0.5);
-    background: ${theme.color.foreground};
+    background: ${theme.color.background};
 `;
 
 export const NavBar = styled.nav `

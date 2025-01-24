@@ -1,6 +1,10 @@
 import styled, { css } from "styled-components";
 import theme from "../../styles/styled-theme";
 
+type ButtonPaginationProps = {
+    current?: boolean
+}
+
 export const WrapperPagination = styled.div `
     display: flex;
     align-items: flex-start;
@@ -53,12 +57,8 @@ export const WrapperPaginationNumbers = styled.div `
     align-items: flex-start;
     gap: 10px;
 `
-
-type ButtonPaginationProps = {
-    current?: boolean
-  }
   
-  const buttonPaginationModifiers = {
+const buttonPaginationModifiers = {
     current: () => css`
       background: ${theme.color.blue};
       border-radius: 50%;
@@ -69,10 +69,9 @@ type ButtonPaginationProps = {
         border-radius: 50%;
         color: #${theme.color.black};
     `
-  }
+}
 
 export const ButtonPagination = styled.button<ButtonPaginationProps> `
-
     ${({ current }) => css`
         all: unset;
         cursor: pointer;

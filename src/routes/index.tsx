@@ -5,6 +5,7 @@ import HomePage from "../pages/HomePage";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import AboutPage from "../pages/About";
+import HelpPage from "../pages/Help";
 
 const AllRoutes = () => {
     return (
@@ -27,7 +28,7 @@ const AllRoutes = () => {
             } />
             <Route path='/help' element={
                 <ProtectedRoute>
-                    <NewSalePage />
+                    <HelpPage />
                 </ProtectedRoute>
             } />
             <Route path='/settings' element={
