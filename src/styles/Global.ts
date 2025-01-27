@@ -5,6 +5,7 @@ import theme from "./styled-theme";
 type PageWrapperProps = {
     smallGap?: boolean;
     bigGap?: boolean;
+    alignItems?: 'flex-start' | 'flex-end';
 }
 
 export const GlobalStyles = createGlobalStyle`
@@ -31,7 +32,7 @@ export const GlobalStyles = createGlobalStyle`
 export const PageWrapper = styled.div<PageWrapperProps> `
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: ${(prop)=>(prop.alignItems?prop.alignItems:'center')};
     gap: ${(prop)=>(prop.smallGap?'1vh':prop.bigGap?'5vh':'3vh')};
     width: 100%;
     height: 100%;

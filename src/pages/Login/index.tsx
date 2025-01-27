@@ -4,14 +4,13 @@ import Button from "../../components/Button";
 import FormHeader from "../../components/FormHeader";
 import InputStringField from "../../components/InputStringField";
 import * as S from './styles';
-import * as G from '../../styles/Global';
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import * as yup from 'yup'
 import { yupResolver } from "@hookform/resolvers/yup";
 import AlertIcon from "../../assets/images/icons/AlertIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EyeIcon from "../../assets/images/icons/EyeIcon";
 import EyeOffIcon from "../../assets/images/icons/EyeOffIcon";
 import Toastify from "../../components/Toastify/Toastify";
@@ -28,7 +27,7 @@ type Login = {
 const loginSchema = yup.object({
     email: yup.string().email('Email inválido!').required('Email necessário para login!'),
     password: yup.string().required('Senha necessária para login!'),
-    code: yup.string().required('Formato incorreto').length(6, "Apenas 6 digitos")
+    code: yup.string().required('Código de 6 digitos')
 });
 
 const Login = () => {
@@ -36,8 +35,8 @@ const Login = () => {
     const [qrCode, setQrCode] = useState('');
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
     const [isMfaEnabled, setIsMfaEnabled] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [isQrcodeModalOpen, setIsQrcodeModalOpen] = useState(false);
+    const [isInputLoaded, setIsInputLoaded] = useState(false);
 
     const { login, checkMfaCode } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm<Login>({
@@ -46,7 +45,6 @@ const Login = () => {
 
     const handleLogin = handleSubmit(async ({ email, password, code }) => {
         try {
-            closeModal();
             await login({ email, password, code });
         } catch (err: any) {
             notify('error', `Dados inválidos, tente novamente!`)
@@ -56,10 +54,10 @@ const Login = () => {
     const handle2faVerification = async () =>{
         if(!isMfaEnabled){
             try {
-                const response = await checkMfaCode({ email:loginInfo.email, password:loginInfo.password });
+                const response = await checkMfaCode(loginInfo.email);
                 setIsMfaEnabled(response.mfaEnabled)
                 setQrCode(response.qrcode)
-                response.mfaEnabled?setIsModalOpen(false):setIsModalOpen(true)
+                response.mfaEnabled?setIsQrcodeModalOpen(false):setIsQrcodeModalOpen(true)
             } catch(err:any){
                 notify('error', err.response.data.message);
                 throw err;
@@ -68,9 +66,16 @@ const Login = () => {
     }
 
     const closeModal = () =>{
-        setIsModalOpen(false)
-        setIsMfaEnabled(false)
+        setIsQrcodeModalOpen(false)
     }
+
+    useEffect(()=>{
+        if(isMfaEnabled){
+            delete errors.code
+            delete errors.password
+            setIsInputLoaded(true)
+        }
+    }, [isMfaEnabled]);
 
     return (
         <SignPageWrapper>
@@ -78,18 +83,10 @@ const Login = () => {
                 <S.Wrapper>
                     <Toastify position='top-right' theme='light' displayTime={2500}/>
                     <S.HeaderWrapper>
-                        { !isMfaEnabled && (
-                            <FormHeader
-                                title={"Entre com sua conta"}
-                                subtitle={"Faça seu login"}
-                            />
-                        )}
-                        { isMfaEnabled && (
-                            <FormHeader
-                                title={"Insira seu código de autenticação"}
-                                subtitle={"Pegue o código no seu app de autenticação"}
-                            />
-                        )}
+                        <FormHeader
+                            title={"Entre com sua conta"}
+                            subtitle={"Faça seu login"}
+                        />
                     </S.HeaderWrapper>
                     <S.Form onSubmit={handleLogin}>
                         <S.InputFormWrapper>
@@ -103,37 +100,33 @@ const Login = () => {
                                 {...register('email')}
                                 onChange={(e)=>{setLoginInfo({email: e.target.value, password: loginInfo.password})}}
                             />
-                            <InputStringField
-                                label="Senha"
-                                type={isPasswordVisible ? 'text' : 'password'}
-                                iconRight={isPasswordVisible? <div onClick={()=>{setIsPasswordVisible(!isPasswordVisible)}}><EyeOffIcon/></div> : <div onClick={()=>setIsPasswordVisible(!isPasswordVisible)}><EyeIcon/></div>}
-                                placeholder="Digite sua senha"
-                                error={errors.password?.message}
-                                inputError={errors.password ? true : false}
-                                {...register('password')}
-                                onChange={(e)=>{setLoginInfo({email:loginInfo.email, password: e.target.value})}}
-                            />
+                            {isInputLoaded && (
+                                <>
+                                    <InputStringField
+                                        label="Senha"
+                                        type={isPasswordVisible ? 'text' : 'password'}
+                                        iconRight={isPasswordVisible? <div onClick={()=>{setIsPasswordVisible(!isPasswordVisible)}}><EyeOffIcon/></div> : <div onClick={()=>setIsPasswordVisible(!isPasswordVisible)}><EyeIcon/></div>}
+                                        placeholder="Digite sua senha"
+                                        error={errors.password?.message}
+                                        inputError={errors.password? true:false}
+                                        {...register('password')}
+                                        onChange={(e)=>{setLoginInfo({email:loginInfo.email, password: e.target.value})}}
+                                    />
+                                    <InputStringField
+                                        label="Código de autenticação"
+                                        type="number"
+                                        placeholder="123456"
+                                        {...register('code')}
+                                        error={errors.code?.message}
+                                        inputError={errors.code? true:false}
+                                        onKeyDown={(e)=>{e.key === 'Enter'?handleLogin():undefined}}
+                                    />
+                                    <Button socialButton type="submit">Login</Button>
+                                </>
+                            )}
                             <Modal
-                                title={"Código de autenticação"}
-                                isOpen={isMfaEnabled}
-                                closeModal={closeModal}
-                                children={
-                                    <G.SimpleColumnWrapper>
-                                        <InputStringField
-                                            label="Digite o código"
-                                            type="number"
-                                            placeholder="123456"
-                                            {...register('code')}
-                                            onKeyDown={(e)=>{e.key === 'Enter'?handleLogin():undefined}}
-                                        />
-                                        <br/>
-                                        <Button socialButton type="submit">Verificar código</Button>
-                                    </G.SimpleColumnWrapper>
-                                }
-                            />
-                            <Modal
-                                title={"Autenticador de 2 fatores"}
-                                isOpen={isModalOpen}
+                                title={"Escaneie o QR Code"}
+                                isOpen={isQrcodeModalOpen}
                                 closeModal={closeModal}
                                 children={
                                     <QRCode 
@@ -144,8 +137,8 @@ const Login = () => {
                                     />
                                 }
                             />
-                            { !isMfaEnabled && (
-                                <Button socialButton onClick={handle2faVerification}>Login</Button>
+                            {!isMfaEnabled && (
+                                <Button socialButton onClick={handle2faVerification}>Próximo</Button>
                             )}
                         </S.InputFormWrapper>
                     </S.Form >

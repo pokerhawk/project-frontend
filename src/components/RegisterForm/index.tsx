@@ -17,18 +17,12 @@ type InputProps = {
     name: string;
     email: string;
     password: string;
-    zipcode: string;
-    number: string;
-    complement?: string;
 }
 
 const registerSchema = yup.object({
     name: yup.string().required('Nome de usuário necessário para cadastro!'),
     email: yup.string().email('Email inválido').required('Email é necessário para cadastro!'),
     password: yup.string().matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, "A senha deve conter ao menos 1 carater especial, 1 letra maiúscula, 1 letra minúscula e 1 número").required('Senha é necessário para cadastro!'),
-    zipcode: yup.string().required("CEP de residencia"),
-    number: yup.string().required(),
-    complement: yup.string()
 })
 
 const RegisterForm = () => {
@@ -42,10 +36,14 @@ const RegisterForm = () => {
         resolver: yupResolver(registerSchema)
     });
 
-    const signUp = async ({ name, email, password, zipcode, number, complement }: InputProps) => {
-        const response = await registerRequest({ email, name, password, zipcode, number, complement });
-        notify('success', response)
-        setTimeout(()=>{navigate('/login')}, 2500);
+    const signUp = async ({ name, email, password }: InputProps) => {
+        try{
+            const response = await registerRequest({ email, name, password });
+            notify('success', response)
+            setTimeout(()=>{navigate('/login')}, 2500);
+        } catch(err:any){
+            notify('warning', err.response.data.message)
+        }
     }
 
     return (
@@ -82,30 +80,6 @@ const RegisterForm = () => {
                             error={errors.password?.message}
                             inputError={errors.password ? true : false}
                             {...register('password')}
-                        />
-                        <InputStringField
-                            label="CEP"
-                            type="number"
-                            placeholder="01000-000"
-                            error={errors.zipcode?.message}
-                            inputError={errors.zipcode ? true : false}
-                            {...register('zipcode')}
-                        />
-                        <InputStringField
-                            label="Numero"
-                            type="number"
-                            placeholder="Numero"
-                            error={errors.number?.message}
-                            inputError={errors.number ? true : false}
-                            {...register('number')}
-                        />
-                        <InputStringField
-                            label="Complemento"
-                            type="text"
-                            placeholder="Casa branca"
-                            error={errors.complement?.message}
-                            inputError={errors.complement ? true : false}
-                            {...register('complement')}
                         />
                     </S.InputWrapper>
                     <S.ButtonWrapper>

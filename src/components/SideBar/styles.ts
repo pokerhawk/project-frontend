@@ -29,7 +29,7 @@ export const ToggleButton = styled.button<SidebarWrapperProps>`
   align-items: center;
   height: 40px;
   width: 100px;
-  left: ${(prop)=>(prop.isOpen ? '-90px': '0')};
+  left: ${(prop)=>(prop.isOpen ? '-100px': '0')};
   border: 0;
   font-size: ${theme.font.sizes.medium};
   color: ${theme.color.white};

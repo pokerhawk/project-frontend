@@ -4,9 +4,7 @@ import { PageWrapper } from '../../styles/Global';
 import Header from '../../components/Header';
 
 const NewSalePage = () => {
-
     const { id } = useParams();
-
     return (
         <PageWrapper>
             <Header/>

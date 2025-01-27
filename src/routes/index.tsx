@@ -6,6 +6,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import AboutPage from "../pages/About";
 import HelpPage from "../pages/Help";
+import Settings from "../pages/Settings";
 
 const AllRoutes = () => {
     return (
@@ -33,7 +34,7 @@ const AllRoutes = () => {
             } />
             <Route path='/settings' element={
                 <ProtectedRoute>
-                    <NewSalePage />
+                    <Settings />
                 </ProtectedRoute>
             } />
             {/* Non Protected Routes */}

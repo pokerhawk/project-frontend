@@ -20,7 +20,7 @@ type AuthContextProps = {
     isAuthenticated: boolean;
     loading: boolean;
     login: (data: LoginProps) => Promise<void>;
-    checkMfaCode: (data: Partial<LoginProps>) => Promise<any>;
+    checkMfaCode: (email: string) => Promise<any>;
     logOut: () => void;
     user: UserProps
 }
@@ -70,9 +70,9 @@ function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-    const checkMfaCode = async ({ email, password }: Partial<LoginProps>) =>{
+    const checkMfaCode = async (email: string) =>{
         try {
-            return await isMfaEnabledRequest({ email, password })
+            return await isMfaEnabledRequest(email)
         } catch (err){
             throw err
         }

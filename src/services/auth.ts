@@ -10,9 +10,6 @@ type RegisterRequestProps = {
     name: string;
     email: string;
     password: string;
-    zipcode: string;
-    number: string;
-    complement?: string;
 }
 
 export const COOKIE_ACCESS_TOKEN = 'cookie_access_token';
@@ -27,18 +24,18 @@ export const loginRequest = async ({ email, password, code }: LoginRequestProps)
     }
 }
 
-export const isMfaEnabledRequest = async ({ email, password }:Partial<LoginRequestProps>) => {
+export const isMfaEnabledRequest = async (email: string) => {
     try {
-        const { data } = await api.post(`/auth/isAuthenticated`, { email, password });
+        const { data } = await api.get(`/auth/isAuthenticated?email=${email}`);
         return data;
     } catch(err){
         throw err;
     }
 }
 
-export const registerRequest = async ({ name, email, password, zipcode, number, complement }:RegisterRequestProps) => {
+export const registerRequest = async ({ name, email, password }:RegisterRequestProps) => {
     try {
-        const { data } = await api.post('/auth/register', { name, email, password, zipcode, number, complement});
+        const { data } = await api.post('/auth/register', { name, email, password });
         return data;
     } catch (err) {
         throw err;
