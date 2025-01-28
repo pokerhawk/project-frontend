@@ -79,9 +79,7 @@ export const buttonModifiers = {
         }
     `,
 
-    commomButton: (theme: DefaultTheme) => css`
-        background-color: ${theme.color.white};
-        color: ${theme.color.black};
+    commomButton: () => css`
         border: 1px solid ${theme.color.black};
         border-radius: 8px;
         display: flex;
@@ -130,7 +128,7 @@ export const Button = styled.button<StyledButtonProps>`
         font-weight: ${theme.font.bold};
         line-height: 24px;
         cursor: pointer;
-        background: ${theme.color.foreground}
+        background: ${theme.color.blue}
         ${!!textButton && buttonModifiers.textButton(theme)}
         ${!!socialButton && buttonModifiers.socialButton(theme)}
         ${!!titleButton && buttonModifiers.titleButton(theme)}

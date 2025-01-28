@@ -3,11 +3,13 @@ import * as S from './styles';
 import * as G from '../../styles/Global';
 import { PageWrapper } from '../../styles/Global';
 import Header from '../../components/Header';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Input from '../../components/Input';
 import { weatherByCity, weatherResponseProps } from '../../services/weather';
 import Modal from '../../components/Modal';
 import { numberToRoman, romanToNumber } from '../../services/math';
+import ChatComponent from '../../components/Chat';
+import { io } from 'socket.io-client';
 
 type weatherProps = {
     bool: boolean;
@@ -23,10 +25,6 @@ const HomePage = () => {
     const closeModal = () =>{
         setWeather({bool:false, data: undefined})
     }
-    
-    useEffect(()=>{
-        //everytime weather.bool is true do something
-    }, [weather.bool === true])
 
     return (
         <PageWrapper bigGap>
@@ -118,6 +116,9 @@ const HomePage = () => {
                     }
                 />
             )}
+            <ChatComponent 
+                userId={id}
+            />
         </PageWrapper>
     );
 }

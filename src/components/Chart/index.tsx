@@ -37,7 +37,6 @@ type ChartState = {
 const Chart = ({
     title, type, labels, series, xAxisTitle, yAxisTitle
 }: ChartProps) => {
-
     const [isLoading, setIsLoading] = useState(true);
     const [width, setWidth] = useState(window.innerWidth);
     const [chartToDisplay, setChartToDisplay] = useState<ChartState>();

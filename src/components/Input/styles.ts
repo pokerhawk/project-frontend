@@ -26,9 +26,9 @@ export type InputWrapperProps = {} & Pick<TInputProperties, InputProps>;
 export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 10px;
-    width: 100%;
+    width: auto;
     height: 100%;
+    padding: 5px;
 `;
 
 export const InputWrapper = styled.div<InputWrapperProps>`
@@ -36,12 +36,12 @@ export const InputWrapper = styled.div<InputWrapperProps>`
         display: flex;
         align-items: center;
         height: 3vh;
-        width: 100%;
         border-radius: 8px;
-        border: 1px solid ${theme.color.black};
+
         ${!!inputError && inputWrapperModifiers.inputError(theme)}
         ${!!inputSearch && inputWrapperModifiers.inputSearch()}
     `}
+    border: 1px solid ${theme.color.darkGray};
 `;
 
 export const Input = styled.input`
