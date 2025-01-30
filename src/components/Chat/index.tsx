@@ -13,8 +13,9 @@ type MessageProps = {
 
 const ChatComponent = () => {
   const { id, type } = useParams();
+  let clientId: string;
   const chatHistory:Array<MessageProps> = [];
-  const [isConnected, setIsConnected] = useState(socket.connected);
+  const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -22,21 +23,22 @@ const ChatComponent = () => {
     if(message.length === 0)
       return;
     inputRef.current!.value = '';
-    socket.emit('message', { sender: id, type, message: message });
+    socket.emit('message', { sender: id, type, message });
   }
 
   useEffect(()=>{
     socket.on('message', (data: MessageProps) => {
-      console.log(data);
-      console.log(`recebendo mensagem: ${data.message}`);
+      if(!clientId)
+        clientId = data.senderClientId;
       const user = data.sender;
-      data.senderClientId === id?
+      data.senderClientId === clientId?
       textareaRef.current!.value += `You: ${data.message}\n`:
       textareaRef.current!.value += `${user}: ${data.message}\n`;
       chatHistory.push({sender: data.sender, senderClientId: data.senderClientId, message: data.message});
     })
 
     return () => {
+      socket.off('connect');
       socket.off('disconnect');
       socket.off('message');
     };
@@ -72,7 +74,6 @@ const ChatComponent = () => {
             socket.disconnect();
             setIsConnected(false);
           }}>Close</Button>
-          <p id='logs'></p>
         </S.BottomDiv>
         <p>Connected: {`${isConnected}`}</p>
       </S.Fieldset>
