@@ -40,7 +40,7 @@ const RegisterForm = () => {
         try{
             const response = await registerRequest({ email, name, password });
             notify('success', response)
-            setTimeout(()=>{navigate('/login')}, 2500);
+            setTimeout(()=>{navigate('/login')}, 1000);
         } catch(err:any){
             notify('warning', err.response.data.message)
         }
