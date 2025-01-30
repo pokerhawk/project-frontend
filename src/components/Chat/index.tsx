@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as S from './style'
 import Input from '../Input';
 import Button from '../Button';
@@ -10,31 +10,32 @@ type MessageProps = {
   message: string;
 }
 
-
 const ChatComponent = () => {
   const { id, type } = useParams();
-  const [text, setText] = useState('');
-  const [history, setHistory] = useState<Array<MessageProps>>([]);
+  const chatHistory:Array<MessageProps> = [];
   const [isConnected, setIsConnected] = useState(socket.connected);
-  const input = document.getElementsByTagName('input');
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmitMessage = (message: string) =>{
-    socket.emit('message', { sender: id, type, message: message })
-    input[3].value = '';
-    setText('');
+    if(message.length === 0)
+      return;
+    inputRef.current!.value = '';
+    socket.emit('message', { sender: id, type, message: message });
   }
 
   useEffect(()=>{
     socket.on('message', (data: MessageProps) => {
-      console.log(`recebendo mensagem: ${data.message}`)
-      setText(data.message)
-      setHistory([...history, {sender: data.sender, message: data.message}])
+      console.log(data);
+      console.log(`recebendo mensagem: ${data.message}`);
+      const user = data.sender;
+      textareaRef.current!.value += `${user}: ${data.message}\n`;
+      chatHistory.push({sender: data.sender, message: data.message});
     })
 
     return () => {
-      socket.off('connect', );
-      socket.off('disconnect', );
-      socket.off('foo', );
+      socket.off('disconnect');
+      socket.off('message');
     };
   }, [])
 
@@ -43,21 +44,23 @@ const ChatComponent = () => {
       <S.Fieldset>
         <legend><h1>Chat Logs</h1></legend>
         <S.Textarea
+          id='logs'
+          ref={textareaRef}
           rows={8}
           cols={60}
-          autoFocus
+          readOnly
         ></S.Textarea>
         <S.BottomDiv>
           <Input
+            ref={inputRef}
             placeholder="Send a message..."
-            onChange={(e)=>{setText(e.target.value)}}
             onKeyDown={(e)=>{
               if(e.key === "Enter"){
-                handleSubmitMessage(text)
+                handleSubmitMessage(inputRef.current!.value)
               }
             }}
           />
-          <Button commomButton onClick={()=>handleSubmitMessage(text)}>Send</Button>
+          <Button commomButton onClick={()=>handleSubmitMessage(inputRef.current!.value)}>Send</Button>
           <Button commomButton onClick={()=>{
             socket.connect();
             setIsConnected(true);
@@ -66,6 +69,7 @@ const ChatComponent = () => {
             socket.disconnect();
             setIsConnected(false);
           }}>Close</Button>
+          <p id='logs'></p>
         </S.BottomDiv>
         <p>Connected: {`${isConnected}`}</p>
       </S.Fieldset>

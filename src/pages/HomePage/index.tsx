@@ -9,7 +9,6 @@ import { weatherByCity, weatherResponseProps } from '../../services/weather';
 import Modal from '../../components/Modal';
 import { numberToRoman, romanToNumber } from '../../services/math';
 import ChatComponent from '../../components/Chat';
-import { io } from 'socket.io-client';
 
 type weatherProps = {
     bool: boolean;
@@ -17,7 +16,6 @@ type weatherProps = {
 }
 
 const HomePage = () => {
-    const {id, type} = useParams();
     const [weather, setWeather] = useState<weatherProps>({bool: false, data: undefined})
     const [romanNumber, setRomanNumber] = useState<string|undefined>(undefined);
     const [numberRoman, setNumberRoman] = useState<number|undefined>(undefined);
@@ -116,9 +114,7 @@ const HomePage = () => {
                     }
                 />
             )}
-            <ChatComponent 
-                userId={id}
-            />
+            <ChatComponent/>
         </PageWrapper>
     );
 }
