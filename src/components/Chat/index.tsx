@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 
 type MessageProps = {
   sender: string;
+  senderClientId: string;
   message: string;
 }
 
@@ -29,8 +30,10 @@ const ChatComponent = () => {
       console.log(data);
       console.log(`recebendo mensagem: ${data.message}`);
       const user = data.sender;
+      data.senderClientId === id?
+      textareaRef.current!.value += `You: ${data.message}\n`:
       textareaRef.current!.value += `${user}: ${data.message}\n`;
-      chatHistory.push({sender: data.sender, message: data.message});
+      chatHistory.push({sender: data.sender, senderClientId: data.senderClientId, message: data.message});
     })
 
     return () => {
