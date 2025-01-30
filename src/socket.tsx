@@ -7,15 +7,15 @@ const nodeEnv = import.meta.env.NODE_ENV
 
 // "undefined" means the URL will be computed from the `window.location` object
 // in other words, it sets to localhost:5173
-const URL = nodeEnv === 'production'? undefined: viteBase;
+const URL = nodeEnv === 'production'? undefined: `${viteBase}?type=${userType}&userId=${userId}`;
 
 const socket = io(URL, {
   transports: ['websocket'],
   autoConnect: false,
-  query: {
-    type: userType,
-    userId
-  },
+  // query: {
+  //   type: userType,
+  //   userId
+  // },
   reconnection: true,
   timeout: 10000, //10 sec
 });
