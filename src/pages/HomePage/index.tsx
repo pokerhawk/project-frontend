@@ -9,6 +9,7 @@ import { weatherByCity, weatherResponseProps } from '../../services/weather';
 import Modal from '../../components/Modal';
 import { numberToRoman, romanToNumber } from '../../services/math';
 import ChatComponent from '../../components/Chat';
+import WebCam from '../../components/Webcam';
 
 type weatherProps = {
     bool: boolean;
@@ -115,6 +116,7 @@ const HomePage = () => {
                 />
             )}
             <ChatComponent/>
+            <WebCam/>
         </PageWrapper>
     );
 }

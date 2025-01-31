@@ -1,21 +1,15 @@
 import { io } from 'socket.io-client';
 
-const userId = (window.location.href).split('/')[4];
-const userType = (window.location.href).split('/')[3];
 const viteBase = import.meta.env.VITE_BASE_URL;
-const nodeEnv = import.meta.env.NODE_ENV
+const nodeEnv = import.meta.env.VITE_NODE_ENV
 
 // "undefined" means the URL will be computed from the `window.location` object
 // in other words, it sets to localhost:5173
-const URL = nodeEnv === 'production'? undefined: `${viteBase}?type=${userType}&userId=${userId}`;
+const URL = nodeEnv === 'production'? undefined: viteBase;
 
 const socket = io(URL, {
   transports: ['websocket'],
   autoConnect: false,
-  // query: {
-  //   type: userType,
-  //   userId
-  // },
   reconnection: true,
   timeout: 10000, //10 sec
 });

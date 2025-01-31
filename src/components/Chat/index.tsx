@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import * as S from './style'
 import Input from '../Input';
 import Button from '../Button';
-import socket from '../../socket';
 import { useParams } from 'react-router-dom';
+import socket from '../../socket';
 
 type MessageProps = {
   sender: string;
@@ -11,9 +11,10 @@ type MessageProps = {
   message: string;
 }
 
+
 const ChatComponent = () => {
-  const { id, type } = useParams();
   let clientId: string;
+  const { id, type } = useParams();
   const chatHistory:Array<MessageProps> = [];
   const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -27,13 +28,23 @@ const ChatComponent = () => {
   }
 
   useEffect(()=>{
+    socket.io.opts.query = {userId: id, type: type};
+    socket.on('connect', ()=> {
+      setIsConnected(socket.connected)
+      clientId = socket.id!;
+    });
+
+    socket.on('disconnect', (data)=> {
+      textareaRef.current!.value += data;
+      setIsConnected(socket.connected)
+    });
+
     socket.on('message', (data: MessageProps) => {
-      if(!clientId)
-        clientId = data.senderClientId;
       const user = data.sender;
       data.senderClientId === clientId?
       textareaRef.current!.value += `You: ${data.message}\n`:
       textareaRef.current!.value += `${user}: ${data.message}\n`;
+      textareaRef.current!.scrollTop = textareaRef.current!.scrollHeight;
       chatHistory.push({sender: data.sender, senderClientId: data.senderClientId, message: data.message});
     })
 
@@ -66,14 +77,8 @@ const ChatComponent = () => {
             }}
           />
           <Button commomButton onClick={()=>handleSubmitMessage(inputRef.current!.value)}>Send</Button>
-          <Button commomButton onClick={()=>{
-            socket.connect();
-            setIsConnected(true);
-          }}>Connect</Button>
-          <Button logoutButton onClick={()=>{
-            socket.disconnect();
-            setIsConnected(false);
-          }}>Close</Button>
+          <Button commomButton onClick={()=>socket.connect()}>Connect</Button>
+          <Button logoutButton onClick={()=>socket.disconnect()}>Disconnect</Button>
         </S.BottomDiv>
         <p>Connected: {`${isConnected}`}</p>
       </S.Fieldset>

@@ -116,10 +116,11 @@ export type StyledButtonProps = {} & Pick<ButtonProps, ButtonTypesProps>
 export const Button = styled.button<StyledButtonProps>`
     ${({ theme, socialButton, titleButton, textButton, reportButton, returnButton, logoutButton, commomButton, exportExcelButton }) => css`
         display: flex;
-        border-radius: 8px;
-        width: 100%;   
-        height: 40px;
         flex-direction: row;
+        border-radius: 8px;
+        padding: 5px 7px;
+        width: 100%;
+        height: 40px;
         gap: 12px;
         align-items: center;
         justify-content: center;
@@ -135,7 +136,7 @@ export const Button = styled.button<StyledButtonProps>`
         ${!!reportButton && buttonModifiers.reportButton()}
         ${!!returnButton && buttonModifiers.returnButton()}
         ${!!logoutButton && buttonModifiers.logoutButton()}
-        ${!!commomButton && buttonModifiers.commomButton(theme)}
+        ${!!commomButton && buttonModifiers.commomButton()}
         ${!!exportExcelButton && buttonModifiers.exportExcelButton()}
 
         ${media.lessThan("small")`
