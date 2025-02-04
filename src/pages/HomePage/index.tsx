@@ -115,8 +115,8 @@ const HomePage = () => {
                     }
                 />
             )}
-            <WebCam/>
             <ChatComponent/>
+            <WebCam/>
         </PageWrapper>
     );
 }

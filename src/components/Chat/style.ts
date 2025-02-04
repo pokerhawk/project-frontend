@@ -5,7 +5,6 @@ export const Wrapper = styled.div`
     flex-direction: column;
     padding: 10px 10px;
     min-width: 620px;
-    height: auto;
     gap: 10px;
 `;
 
@@ -29,4 +28,19 @@ export const BottomDiv = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 10px;
+`
+
+export const RefreshDiv = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 10px;
+`
+
+export const Aside = styled.aside`
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    min-width: 150px;
+    gap: 5px;
 `

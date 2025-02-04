@@ -86,7 +86,8 @@ export const Aside = styled.aside`
 export const SimpleColumnWrapper = styled.div`
     display: flex;
     flex-direction: column;
-
+    heigth: 100%;
+    width: 100%;
 `
 
 export const SimpleRowWrapper = styled.div`
@@ -94,6 +95,8 @@ export const SimpleRowWrapper = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    heigth: 100%;
+    width: 100%
     padding: 2px;
     gap: 10px;
 `
